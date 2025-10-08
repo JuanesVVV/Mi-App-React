@@ -1,56 +1,54 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import Button from './Button';
 
-const Contador = () => {
-  const [numeros, setNumeros] = useState([]);
-  const [resultado, setResultado] = useState(null);
+const Calculadora = () => {
+  const [contador, setContador] = useState('');
 
-  const inputNumber = (num) => {
-    if (numeros.length < 2) {
-      setNumeros([...numeros, num]);
-    }
+  const InputNumber = (value) => {
+    setContador((prev) => prev + value);
   };
 
-  const sumar = () => {
-    if (numeros.length === 2) {
-      setResultado(numeros[0] + numeros[1]);
-      setNumeros([]);
-    }
-  };
-
-  const restar = () => {
-    if (numeros.length === 2) {
-      setResultado(numeros[0] - numeros[1]);
-      setNumeros([]);
+  const calcularResultado = () => {
+    try {
+      setContador(eval(contador).toString()); 
+    } catch {
+      setContador('Error');
     }
   };
 
   const limpiar = () => {
-    setNumeros([]);
-    setResultado(null);
+    setContador('');
   };
 
   return (
-    <div className="calculadora-container">
-      <label className="calculadora-display">
-        {numeros.length === 0 && resultado === null && 'Selecciona dos números'}
-        {numeros.length === 1 && `Primer número: ${numeros[0]}`}
-        {numeros.length === 2 && `Segundo número: ${numeros[1]}`}
-        {resultado !== null && `Resultado: ${resultado}`}
-      </label>
+    <div>
+      <h2>{contador || '0'}</h2>
 
-      <div className="calculadora-grid">
-        {[1, 2, 3, 4, 5, 6, 7, 8, 9, 0].map((num) => (
-          <Button key={num} onClick={() => inputNumber(num)}>
-            {num}
-          </Button>
-        ))}
-        <Button onClick={sumar}>+</Button>
-        <Button onClick={restar}>−</Button>
+      <div>
+        {/* Números */}
+        <Button onClick={() => InputNumber('1')}>1</Button>
+        <Button onClick={() => InputNumber('2')}>2</Button>
+        <Button onClick={() => InputNumber('3')}>3</Button>
+        <Button onClick={() => InputNumber('4')}>4</Button>
+        <Button onClick={() => InputNumber('5')}>5</Button>
+        <Button onClick={() => InputNumber('6')}>6</Button>
+        <Button onClick={() => InputNumber('7')}>7</Button>
+        <Button onClick={() => InputNumber('8')}>8</Button>
+        <Button onClick={() => InputNumber('9')}>9</Button>
+        <Button onClick={() => InputNumber('0')}>0</Button>
+
+        {/* Operadores */}
+        <Button onClick={() => InputNumber('+')}>+</Button>
+        <Button onClick={() => InputNumber('-')}>−</Button>
+        <Button onClick={() => InputNumber('*')}>×</Button>
+        <Button onClick={() => InputNumber('/')}>÷</Button>
+
+        {/* Acciones */}
         <Button onClick={limpiar}>C</Button>
+        <Button onClick={calcularResultado}>=</Button>
       </div>
     </div>
   );
 };
 
-export default Contador;
+export default Calculadora;

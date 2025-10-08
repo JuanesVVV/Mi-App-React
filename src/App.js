@@ -1,12 +1,12 @@
 import logo from './logo.svg';
 import './App.css';
-import Contador from './componentes/Calculadora';
+import Calculadora from './componentes/Calculadora';
 import Button from './componentes/Button';
 
 function App() {
   return (
     <div className="App">
-      <Contador />
+      <Calculadora />
       <Button />
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
