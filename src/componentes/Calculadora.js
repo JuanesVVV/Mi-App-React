@@ -9,9 +9,10 @@ const Calculadora = () => {
   };
 
   const calcularResultado = () => {
-    try {
-      setContador(eval(contador).toString()); 
-    } catch {
+    if (contador.match(/^[0-9+\-*/.() ]+$/)) {
+      const resultado = Function('return (' + contador + ')')();
+      setContador(`${resultado}`); // Conversión implícita a string
+    } else {
       setContador('Error');
     }
   };
@@ -25,7 +26,6 @@ const Calculadora = () => {
       <h2>{contador || '0'}</h2>
 
       <div>
-        
         <Button onClick={() => InputNumber('1')}>1</Button>
         <Button onClick={() => InputNumber('2')}>2</Button>
         <Button onClick={() => InputNumber('3')}>3</Button>
@@ -37,13 +37,11 @@ const Calculadora = () => {
         <Button onClick={() => InputNumber('9')}>9</Button>
         <Button onClick={() => InputNumber('0')}>0</Button>
 
-        
         <Button onClick={() => InputNumber('+')}>+</Button>
         <Button onClick={() => InputNumber('-')}>−</Button>
         <Button onClick={() => InputNumber('*')}>×</Button>
         <Button onClick={() => InputNumber('/')}>÷</Button>
 
-        
         <Button onClick={limpiar}>C</Button>
         <Button onClick={calcularResultado}>=</Button>
       </div>
